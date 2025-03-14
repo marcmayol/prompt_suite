@@ -1,0 +1,22 @@
+traductor:
+  models:
+    gpt-4: "Traduce el siguiente texto al {idioma}: {texto}"
+    gpt-3.5-turbo: "Traduce: {texto}"
+  parameters:
+    - idioma
+    - texto
+
+analizador_sentimiento:
+  models:
+    gpt-4: "Analiza el sentimiento del siguiente texto: {texto}"
+    gpt-3.5-turbo: "¿Qué sentimiento expresa este texto?: {texto}"
+  parameters:
+    - texto
+
+resumidor:
+  models:
+    gpt-4: "Resume el siguiente texto en {num_palabras} palabras: {texto}"
+    gpt-3.5-turbo: "Haz un resumen de {num_palabras} palabras: {texto}"
+  parameters:
+    - texto
+    - num_palabras 
