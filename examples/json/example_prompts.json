@@ -1,0 +1,41 @@
+{
+  "instagram-editor": {
+    "name": "instagram-editor",
+    "parameters": [
+      "post",
+      "hashtags"
+    ],
+    "versions": {
+      "gpt-4o": {
+        "prompt": "Act as a professional Instagram editor. Improve the following post: {post} and include these hashtags: {hashtags}"
+      },
+      "gemini-pro": {
+        "prompt": "You are a social media expert. Refine this Instagram content: {post} using the following hashtags: {hashtags}"
+      }
+    },
+    "default": "gpt-4o"
+  },
+  "review-writer": {
+    "name": "review-writer",
+    "parameters": [
+      "product_name",
+      "rating",
+      "features"
+    ],
+    "versions": {
+      "gpt-4o": {
+        "prompt": "Generate a review for {product_name} with a rating of {rating} stars."
+      },
+      "gemini-pro": {
+        "prompt": "You are a review expert. Write a {rating}-star review of {product_name}."
+      },
+      "claude-opus": {
+        "prompt": "Review the product {product_name}. Rating: {rating} stars."
+      },
+      "mistral": {
+        "prompt": "Write a {rating}-star review of {product_name}. Focus on: {features}."
+      }
+    },
+    "default": "mistral"
+  }
+}

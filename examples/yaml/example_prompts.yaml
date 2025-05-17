@@ -1,0 +1,31 @@
+instagram-editor:
+  name: instagram-editor
+  parameters:
+    - post
+    - hashtags
+  versions:
+    gpt-4o:
+      prompt: "Act as a professional Instagram editor. Improve the following post: {post} and include these hashtags: {hashtags}"
+    gemini-pro:
+      prompt: "You are a social media expert. Refine this Instagram content: {post} using the following hashtags: {hashtags}"
+  default: gpt-4o
+
+email-summarizer:
+  name: email-summarizer
+  parameters:
+    - email_body
+  versions:
+    gpt-4o:
+      prompt: "Summarize the following email content in a professional tone:\n\n{email_body}"
+    claude-opus:
+      prompt: "Read the email below and produce a concise summary:\n\n{email_body}"
+  default: claude-opus
+
+bug-report-generator:
+  name: bug-report-generator
+  parameters:
+    - description
+    - steps
+  versions:
+    gpt-4o:
+      prompt: "Create a detailed bug report from this description: {description} and these steps to reproduce: {steps}"

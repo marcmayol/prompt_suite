@@ -1,0 +1,151 @@
+Metadata-Version: 0.0.1
+Name: prompt-suite
+Version: 0.1.0
+Summary: Una biblioteca para gestionar prompts de IA con soporte para YAML, JSON y SQL
+Home-page: https://github.com/marcmayol/prompt_suite
+Author: Tu Nombre
+Author-email: tu.email@ejemplo.com
+License: UNKNOWN
+Platform: UNKNOWN
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+
+# Prompt Manager
+
+Una biblioteca Python para gestionar prompts de IA con soporte para almacenamiento en YAML, JSON y SQL.
+
+## CaracterÃ­sticas
+
+- GestiÃ³n de prompts con mÃºltiples modelos
+- Soporte para parÃ¡metros dinÃ¡micos
+- Almacenamiento en YAML o JSON con guardado automÃ¡tico
+- Soporte para bases de datos SQL (SQLite, PostgreSQL, etc.)
+- ValidaciÃ³n de datos con Pydantic
+- Interfaz simple y fÃ¡cil de usar
+
+## InstalaciÃ³n
+
+### InstalaciÃ³n desde PyPI
+
+```bash
+pip install prompt-manager
+```
+
+### InstalaciÃ³n desde el cÃ³digo fuente
+
+```bash
+git clone https://github.com/tu-usuario/prompt-manager.git
+cd prompt-manager
+pip install -e .
+```
+
+## Uso bÃ¡sico
+
+### Con almacenamiento YAML
+
+```python
+from prompt_suite import PromptSuite
+
+# Crear un gestor de prompts con YAML
+pm = PromptSuite("prompts.yaml", format="yaml")
+
+# Crear un nuevo prompt
+pm.create_prompt(
+    prompt_name="traductor",
+    models={
+        "gpt-4": "Traduce el siguiente texto al {idioma}: {texto}"
+    },
+    parameters=["idioma", "texto"]
+)
+
+# Usar el prompt
+texto = pm.get_prompt(
+    prompt_name="traductor",
+    model="gpt-4",
+    parameters={
+        "idioma": "inglÃ©s",
+        "texto": "Hola, Â¿cÃ³mo estÃ¡s?"
+    }
+)
+```
+
+### Con almacenamiento JSON
+
+```python
+from prompt_suite import PromptSuite
+
+# Crear un gestor de prompts con JSON
+pm = PromptSuite("prompts.json", format="json")
+
+# Crear un nuevo prompt
+pm.create_prompt(
+    prompt_name="traductor",
+    models={
+        "gpt-4": "Traduce el siguiente texto al {idioma}: {texto}"
+    },
+    parameters=["idioma", "texto"]
+)
+```
+
+### Con almacenamiento SQL
+
+```python
+from prompt_suite import SQLPromptManager, SQLConfig
+import sqlite3
+
+# Configurar la conexiÃ³n SQL
+conn = sqlite3.connect("prompts.db")
+config = SQLConfig(connection=conn)
+
+# Crear el gestor de prompts
+pm = SQLPromptManager(config)
+
+# Crear un nuevo prompt
+pm.create_prompt(
+    prompt_name="traductor",
+    models={
+        "gpt-4": "Traduce el siguiente texto al {idioma}: {texto}"
+    },
+    parameters=["idioma", "texto"]
+)
+```
+
+## ComparaciÃ³n de formatos
+
+### YAML
+- MÃ¡s legible para humanos
+- Soporta comentarios
+- Mejor para configuraciones
+- Ideal para desarrollo y pruebas
+
+### JSON
+- MÃ¡s rÃ¡pido de parsear
+- Mejor para APIs web
+- MÃ¡s estricto y estructurado
+- Ideal para producciÃ³n
+
+### SQL
+- Mejor para mÃºltiples usuarios
+- Soporte para transacciones
+- Mejor para datos dinÃ¡micos
+- Ideal para aplicaciones en producciÃ³n
+
+## Requisitos
+
+- Python >= 3.8
+- pyyaml >= 6.0.1
+- pydantic >= 2.5.2
+- psycopg2-binary >= 2.9.9 (opcional, para soporte de PostgreSQL)
+
+## Licencia
+
+MIT License 
+

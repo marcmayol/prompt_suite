@@ -1,0 +1,9 @@
+MANIFEST.in
+README.md
+requirements.txt
+setup.py
+prompt_suite.egg-info/PKG-INFO
+prompt_suite.egg-info/SOURCES.txt
+prompt_suite.egg-info/dependency_links.txt
+prompt_suite.egg-info/requires.txt
+prompt_suite.egg-info/top_level.txt

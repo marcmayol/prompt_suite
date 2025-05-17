@@ -1,130 +1,84 @@
-# Prompt Manager
+# Prompt Suite
 
-Una biblioteca Python para gestionar prompts de IA con soporte para almacenamiento en YAML, JSON y SQL.
+**Prompt Suite** is a lightweight and extensible Python library for managing prompts with version control, model-specific variations, and flexible storage. It is built on the idea that **prompts are not just text — they are code**.
 
-## Características
+## 🚀 Features
 
-- Gestión de prompts con múltiples modelos
-- Soporte para parámetros dinámicos
-- Almacenamiento en YAML o JSON con guardado automático
-- Soporte para bases de datos SQL (SQLite, PostgreSQL, etc.)
-- Validación de datos con Pydantic
-- Interfaz simple y fácil de usar
+* 🧠 **Model-specific prompts**: Store and retrieve prompt variations for different models (e.g., GPT-4, Claude, Gemini).
+* 🔄 **Version control**: Keep track of different versions of each prompt.
+* 📆 **Flexible storage**: Use YAML, JSON, or SQL to store your prompts.
+* 🧹 **Placeholders system**: Create prompts with dynamic fields and fill them easily at runtime.
+* 💡 **Customizable structure**: Easily adapt to your workflow and integration needs.
 
-## Instalación
-
-### Instalación desde PyPI
+## 📆 Installation
 
 ```bash
-pip install prompt-manager
+pip install prompt-suite
 ```
 
-### Instalación desde el código fuente
+## 🛠️ Basic Usage
 
-```bash
-git clone https://github.com/tu-usuario/prompt-manager.git
-cd prompt-manager
-pip install -e .
-```
-
-## Uso básico
-
-### Con almacenamiento YAML
+### JSON/YAML-based
 
 ```python
-from prompt_manager import PromptManager
+from prompt_suite import PromptManager
 
-# Crear un gestor de prompts con YAML
-pm = PromptManager("prompts.yaml", format="yaml")
+# Load from JSON or YAML
+manager = PromptManager.load("prompts.json")
 
-# Crear un nuevo prompt
-pm.create_prompt(
-    prompt_name="traductor",
-    models={
-        "gpt-4": "Traduce el siguiente texto al {idioma}: {texto}"
-    },
-    parameters=["idioma", "texto"]
-)
+# Get a prompt for a specific model
+prompt = manager.get_prompt("generate_summary", model="gpt-4", params={"topic": "AI in healthcare"})
 
-# Usar el prompt
-texto = pm.get_prompt(
-    prompt_name="traductor",
-    model="gpt-4",
-    parameters={
-        "idioma": "inglés",
-        "texto": "Hola, ¿cómo estás?"
-    }
-)
+print(prompt)
 ```
 
-### Con almacenamiento JSON
+### SQL-based
 
 ```python
-from prompt_manager import PromptManager
+from prompt_suite_sql import PromptSuiteSQL
 
-# Crear un gestor de prompts con JSON
-pm = PromptManager("prompts.json", format="json")
+# Create the instance (with default table creation)
+db = PromptSuiteSQL(connection=my_conn, create_tables=True)
 
-# Crear un nuevo prompt
-pm.create_prompt(
-    prompt_name="traductor",
-    models={
-        "gpt-4": "Traduce el siguiente texto al {idioma}: {texto}"
-    },
-    parameters=["idioma", "texto"]
-)
+# Add a prompt and a version
+db.add_prompt("generate_summary", description="Summary generator prompt")
+db.add_version("generate_summary", model="gpt-4", prompt="Please summarize this: {{topic}}")
+
+# Retrieve a prompt with parameters
+prompt = db.get_prompt("generate_summary", model="gpt-4", params={"topic": "AI in healthcare"})
+
+print(prompt)
 ```
 
-### Con almacenamiento SQL
+## 📂 Prompt Structure (YAML/JSON example)
 
-```python
-from prompt_manager import SQLPromptManager, SQLConfig
-import sqlite3
-
-# Configurar la conexión SQL
-conn = sqlite3.connect("prompts.db")
-config = SQLConfig(connection=conn)
-
-# Crear el gestor de prompts
-pm = SQLPromptManager(config)
-
-# Crear un nuevo prompt
-pm.create_prompt(
-    prompt_name="traductor",
-    models={
-        "gpt-4": "Traduce el siguiente texto al {idioma}: {texto}"
-    },
-    parameters=["idioma", "texto"]
-)
+```yaml
+- prompt_name: generate_summary
+  parameters: [topic]
+  versions:
+    default:
+      prompt: "Summarize this: {{topic}}"
+    gpt-4:
+      prompt: "Please provide a concise summary of: {{topic}}"
 ```
 
-## Comparación de formatos
+## 🔧 SQL Support
 
-### YAML
-- Más legible para humanos
-- Soporta comentarios
-- Mejor para configuraciones
-- Ideal para desarrollo y pruebas
+Use `PromptSuiteSQL` for SQL-based storage.
+It supports:
 
-### JSON
-- Más rápido de parsear
-- Mejor para APIs web
-- Más estricto y estructurado
-- Ideal para producción
+* PostgreSQL
+* MySQL
+* SQLite
+* And other SQL engines (driver-agnostic)
 
-### SQL
-- Mejor para múltiples usuarios
-- Soporte para transacciones
-- Mejor para datos dinámicos
-- Ideal para aplicaciones en producción
+Custom queries and placeholder logic are supported for flexibility and integration into enterprise systems.
 
-## Requisitos
+## 🤝 Contributing
 
-- Python >= 3.8
-- pyyaml >= 6.0.1
-- pydantic >= 2.5.2
-- psycopg2-binary >= 2.9.9 (opcional, para soporte de PostgreSQL)
+Contributions, issues, and feature requests are welcome!
+Feel free to check [issues page](https://github.com/marcmayol/prompt-suite/issues) or submit a pull request.
 
-## Licencia
+## 📄 License
 
-MIT License 
+This project is licensed under the MIT License.

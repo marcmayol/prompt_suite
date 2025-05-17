@@ -1,5 +1,5 @@
-from .prompt_manager import PromptManager
-from .sql_prompt_manager import SQLPromptManager, SQLConfig
+from .prompt_suite import PromptSuite
+from .prompt_suite_sql import SQLPromptSuite, SQLConfig
 
 __version__ = "0.1.0"
-__all__ = ["PromptManager", "SQLPromptManager", "SQLConfig"] 
+__all__ = ["PromptSuite", "SQLPromptSuite", "SQLConfig"]
